@@ -6,6 +6,7 @@ import 'firebase_options.dart';
 import 'providers/auth_provider.dart';
 import 'providers/incident_provider.dart';
 import 'views/login/login_view.dart';
+import 'views/home/home_view.dart';
 
 // ĐÃ XÓA CÁC DÒNG IMPORT BỊ LỖI Ở ĐÂY
 
@@ -24,12 +25,13 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => AuthProvider()),
-          ChangeNotifierProvider(create: (_) => IncidentProvider()..fetchRealtime()), // Nhớ bỏ cái  đi nhé
+          ChangeNotifierProvider(
+            create: (_) => IncidentProvider()..fetchRealtime(),
+          ), // Nhớ bỏ cái  đi nhé
         ],
         child: const SmartCityApp(),
       ),
     );
-    
   } catch (e, stacktrace) {
     // NẾU CÓ LỖI, NÓ SẼ IN ĐỎ CHÓT RA MÀN HÌNH MÁY TÍNH
     debugPrint('🚨🚨🚨 LỖI KHỞI ĐỘNG Ở HÀM MAIN: $e');
@@ -50,14 +52,14 @@ class SmartCityApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      initialRoute: '/', 
+      initialRoute: '/',
       routes: {
         // Tạm thời trỏ tới các Màn hình giả (Dummy Views) ở bên dưới
-        '/': (context) => const LoginView(),             
-        '/home': (context) => const DummyHomeView(),           
-        '/detail': (context) => const DummyDetailView(),       
-        '/create': (context) => const DummyCreateView(), 
-        '/my_reports': (context) => const DummyMyReportsView(), 
+        '/': (context) => const LoginView(),
+        '/home': (context) => const HomeView(),
+        '/detail': (context) => const DummyDetailView(),
+        '/create': (context) => const DummyCreateView(),
+        '/my_reports': (context) => const DummyMyReportsView(),
       },
     );
   }
@@ -93,9 +95,18 @@ class DummyHomeView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(onPressed: () => Navigator.pushNamed(context, '/detail'), child: const Text('Tới Detail')),
-            ElevatedButton(onPressed: () => Navigator.pushNamed(context, '/create'), child: const Text('Tới Create')),
-            ElevatedButton(onPressed: () => Navigator.pushNamed(context, '/my_reports'), child: const Text('Tới My Reports')),
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, '/detail'),
+              child: const Text('Tới Detail'),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, '/create'),
+              child: const Text('Tới Create'),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, '/my_reports'),
+              child: const Text('Tới My Reports'),
+            ),
           ],
         ),
       ),
@@ -103,6 +114,24 @@ class DummyHomeView extends StatelessWidget {
   }
 }
 
-class DummyDetailView extends StatelessWidget { const DummyDetailView({super.key}); @override Widget build(BuildContext context) => Scaffold(appBar: AppBar(title: const Text('Màn hình 2 - Detail (TV 3)'))); }
-class DummyCreateView extends StatelessWidget { const DummyCreateView({super.key}); @override Widget build(BuildContext context) => Scaffold(appBar: AppBar(title: const Text('Màn hình 3 - Create (TV 4)'))); }
-class DummyMyReportsView extends StatelessWidget { const DummyMyReportsView({super.key}); @override Widget build(BuildContext context) => Scaffold(appBar: AppBar(title: const Text('Màn hình 4 - My Reports (TV 5)'))); }
+class DummyDetailView extends StatelessWidget {
+  const DummyDetailView({super.key});
+  @override
+  Widget build(BuildContext context) =>
+      Scaffold(appBar: AppBar(title: const Text('Màn hình 2 - Detail (TV 3)')));
+}
+
+class DummyCreateView extends StatelessWidget {
+  const DummyCreateView({super.key});
+  @override
+  Widget build(BuildContext context) =>
+      Scaffold(appBar: AppBar(title: const Text('Màn hình 3 - Create (TV 4)')));
+}
+
+class DummyMyReportsView extends StatelessWidget {
+  const DummyMyReportsView({super.key});
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('Màn hình 4 - My Reports (TV 5)')),
+  );
+}
