@@ -5,26 +5,36 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'providers/auth_provider.dart';
 import 'providers/incident_provider.dart';
+import 'views/login/login_view.dart';
 
 // ĐÃ XÓA CÁC DÒNG IMPORT BỊ LỖI Ở ĐÂY
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    // Đảm bảo khởi tạo nền tảng
+    WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+    // Khởi tạo Firebase
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-        // LỖI 1 ĐÃ ĐƯỢC SỬA: Đổi thành fetchRealtime() cho khớp với Provider
-        ChangeNotifierProvider(create: (_) => IncidentProvider()..fetchRealtime()),
-      ],
-      child: const SmartCityApp(),
-    ),
-  );
+    // Chạy app
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
+          ChangeNotifierProvider(create: (_) => IncidentProvider()..fetchRealtime()), // Nhớ bỏ cái  đi nhé
+        ],
+        child: const SmartCityApp(),
+      ),
+    );
+    
+  } catch (e, stacktrace) {
+    // NẾU CÓ LỖI, NÓ SẼ IN ĐỎ CHÓT RA MÀN HÌNH MÁY TÍNH
+    debugPrint('🚨🚨🚨 LỖI KHỞI ĐỘNG Ở HÀM MAIN: $e');
+    debugPrint(stacktrace.toString());
+  }
 }
 
 class SmartCityApp extends StatelessWidget {
@@ -43,7 +53,7 @@ class SmartCityApp extends StatelessWidget {
       initialRoute: '/', 
       routes: {
         // Tạm thời trỏ tới các Màn hình giả (Dummy Views) ở bên dưới
-        '/': (context) => const DummyLoginView(),             
+        '/': (context) => const LoginView(),             
         '/home': (context) => const DummyHomeView(),           
         '/detail': (context) => const DummyDetailView(),       
         '/create': (context) => const DummyCreateView(), 
