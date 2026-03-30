@@ -7,6 +7,7 @@ import 'providers/auth_provider.dart';
 import 'providers/incident_provider.dart';
 import 'views/login/login_view.dart';
 import 'views/home/home_view.dart';
+import 'views/create_report/create_report_view.dart';
 
 // ĐÃ XÓA CÁC DÒNG IMPORT BỊ LỖI Ở ĐÂY
 
@@ -58,7 +59,7 @@ class SmartCityApp extends StatelessWidget {
         '/': (context) => const LoginView(),
         '/home': (context) => const HomeView(),
         '/detail': (context) => const DummyDetailView(),
-        '/create': (context) => const DummyCreateView(),
+        '/create': (context) => const CreateReportView(),
         '/my_reports': (context) => const DummyMyReportsView(),
       },
     );

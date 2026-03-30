@@ -22,6 +22,22 @@
           }
         },
         {
+          "client_id": "316749649272-q1nvos7fb6qa6fhlb0bckt56d8vfpgae.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smart_city_reporting",
+            "certificate_hash": "b5944aeb4d17a412879e3380e825c3d2713abf9a"
+          }
+        },
+        {
+          "client_id": "316749649272-seg737bkeck8e6vkoj5cappg4qtq6oh1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smart_city_reporting",
+            "certificate_hash": "1923781e0af8d6ab73d21464237ef61a30da02d8"
+          }
+        },
+        {
           "client_id": "316749649272-1u94uobo0mrgs11e9huvh8cq613vb4eb.apps.googleusercontent.com",
           "client_type": 3
         }
