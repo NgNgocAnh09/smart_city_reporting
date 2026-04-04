@@ -41,9 +41,6 @@ dependencies:
   cloudinary_public: ^0.23.1
   provider: ^6.1.5+1
   geolocator: ^14.0.2
-  image_picker: ^1.1.2
-  google_maps_flutter: ^2.12.3
-  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

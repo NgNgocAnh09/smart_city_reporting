@@ -10,9 +10,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> signInWithGoogle() async {
     try {
-      await _googleSignIn.initialize(
-        serverClientId: '316749649272-1u94uobo0mrgs11e9huvh8cq613vb4eb.apps.googleusercontent.com',
-      );
+      await _googleSignIn.initialize();
 
       // Đã bỏ dấu '?' và code kiểm tra null vì hàm này luôn trả về đối tượng
       final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();

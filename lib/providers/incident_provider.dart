@@ -15,13 +15,4 @@ class IncidentProvider extends ChangeNotifier {
 
   Future<void> addIncident(Incident item) async => await _db.collection('incidents').add(item.toMap());
   Future<void> deleteIncident(String id) async => await _db.collection('incidents').doc(id).delete();
-
-  Incident? getIncidentById(String id) {
-    for (final incident in incidents) {
-      if (incident.id == id) {
-        return incident;
-      }
-    }
-    return null;
-  }
 }
