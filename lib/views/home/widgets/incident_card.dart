@@ -19,7 +19,10 @@ class IncidentCard extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Row(
             children: [
-              _IncidentThumbnail(imageUrl: incident.imageUrl),
+              _IncidentThumbnail(
+                imageUrl: incident.imageUrl,
+                heroTag: 'incident-image-${incident.id ?? incident.imageUrl}',
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -61,9 +64,10 @@ class IncidentCard extends StatelessWidget {
 }
 
 class _IncidentThumbnail extends StatelessWidget {
-  const _IncidentThumbnail({required this.imageUrl});
+  const _IncidentThumbnail({required this.imageUrl, required this.heroTag});
 
   final String imageUrl;
+  final String heroTag;
 
   @override
   Widget build(BuildContext context) {
@@ -76,21 +80,24 @@ class _IncidentThumbnail extends StatelessWidget {
       );
     }
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: Image.network(
-        imageUrl,
-        width: 84,
-        height: 84,
-        fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) {
-          return Container(
-            width: 84,
-            height: 84,
-            color: Theme.of(context).colorScheme.surfaceContainerHighest,
-            child: const Icon(Icons.broken_image_outlined),
-          );
-        },
+    return Hero(
+      tag: heroTag,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.network(
+          imageUrl,
+          width: 84,
+          height: 84,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              width: 84,
+              height: 84,
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+              child: const Icon(Icons.broken_image_outlined),
+            );
+          },
+        ),
       ),
     );
   }

@@ -94,14 +94,22 @@ class _HomeViewState extends State<HomeView> {
           return ListView.separated(
             padding: const EdgeInsets.all(16),
             itemCount: filteredIncidents.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
+            separatorBuilder: (context, index) => const SizedBox(height: 12),
             itemBuilder: (context, index) {
               final incident = filteredIncidents[index];
 
               return IncidentCard(
                 incident: incident,
                 onTap: () {
-                  Navigator.pushNamed(context, '/detail', arguments: incident);
+                  final incidentId = incident.id;
+                  if (incidentId == null || incidentId.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Khong tim thay id su co.')),
+                    );
+                    return;
+                  }
+
+                  Navigator.pushNamed(context, '/detail', arguments: incidentId);
                 },
               );
             },

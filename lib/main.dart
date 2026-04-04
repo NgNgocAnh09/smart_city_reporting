@@ -8,6 +8,7 @@ import 'providers/incident_provider.dart';
 import 'views/login/login_view.dart';
 import 'views/home/home_view.dart';
 import 'views/create_report/create_report_view.dart';
+import 'views/detail/detail_view.dart';
 
 // ĐÃ XÓA CÁC DÒNG IMPORT BỊ LỖI Ở ĐÂY
 
@@ -58,7 +59,7 @@ class SmartCityApp extends StatelessWidget {
         // Tạm thời trỏ tới các Màn hình giả (Dummy Views) ở bên dưới
         '/': (context) => const LoginView(),
         '/home': (context) => const HomeView(),
-        '/detail': (context) => const DummyDetailView(),
+        '/detail': (context) => const DetailView(),
         '/create': (context) => const CreateReportView(),
         '/my_reports': (context) => const DummyMyReportsView(),
       },
