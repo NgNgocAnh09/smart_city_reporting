@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../models/incident_model.dart';
 import '../../home/widgets/incident_card.dart';
+import '../../../providers/incident_provider.dart';
 
 class DismissibleItem extends StatelessWidget {
   final Incident incident;
@@ -29,9 +31,81 @@ class DismissibleItem extends StatelessWidget {
         ),
         child: const Icon(Icons.delete, color: Colors.white),
       ),
-      child: IncidentCard(
-        incident: incident,
-        onTap: onTap,
+      child: Row(
+        children: [
+          Expanded(
+            child: IncidentCard(
+              incident: incident,
+              onTap: onTap,
+            ),
+          ),
+          // Actions
+          PopupMenuButton<String>(
+            onSelected: (value) async {
+              final provider = Provider.of<IncidentProvider>(context, listen: false);
+              if (incident.id == null) return;
+              if (value == 'edit') {
+                await _showEditDialog(context, provider, incident);
+              } else if (value == 'in_progress') {
+                // SỬA LỖI 1: Dùng .name thay vì .index để tránh crash app khi tải lại dữ liệu
+                await provider.updateIncident(incident.id!, {'status': IncidentStatus.inProgress.name});
+              } else if (value == 'resolved') {
+                // SỬA LỖI 1: Dùng .name thay vì .index
+                await provider.updateIncident(incident.id!, {'status': IncidentStatus.resolved.name});
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(value: 'edit', child: Text('Sửa')),
+              const PopupMenuItem(value: 'in_progress', child: Text('Đang xử lý')),
+              const PopupMenuItem(value: 'resolved', child: Text('Đã xong')),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showEditDialog(BuildContext context, IncidentProvider provider, Incident incident) async {
+    final titleCtrl = TextEditingController(text: incident.title);
+    final descCtrl = TextEditingController(text: incident.description);
+    final addrCtrl = TextEditingController(text: incident.address);
+
+    await showDialog<void>(
+      context: context,
+      // Đổi tên biến này thành dialogContext để không bị nhầm lẫn với context của Widget bên ngoài
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Sửa báo cáo'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(controller: titleCtrl, decoration: const InputDecoration(labelText: 'Tiêu đề')),
+              TextField(controller: descCtrl, decoration: const InputDecoration(labelText: 'Mô tả'), minLines: 2, maxLines: 4),
+              TextField(controller: addrCtrl, decoration: const InputDecoration(labelText: 'Địa chỉ')),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(dialogContext), child: const Text('Hủy')),
+          TextButton(
+            onPressed: () async {
+              if (incident.id == null) return;
+              
+              await provider.updateIncident(incident.id!, {
+                'title': titleCtrl.text.trim(),
+                'description': descCtrl.text.trim(),
+                'address': addrCtrl.text.trim(),
+              });
+
+              // SỬA LỖI 2 (Thiếu mounted): 
+              // Vì đây là StatelessWidget, ta dùng thuộc tính mounted trực tiếp trên dialogContext
+              if (!dialogContext.mounted) return;
+              
+              Navigator.pop(dialogContext);
+            },
+            child: const Text('Lưu'),
+          ),
+        ],
       ),
     );
   }

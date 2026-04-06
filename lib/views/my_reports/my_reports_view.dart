@@ -10,11 +10,11 @@ class MyReportsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Lấy provider để biết ai đang đăng nhập
     final authProvider = context.read<AuthProvider>();
-
-    // FIX LỖI 1: Thử lấy UID từ đối tượng user (phổ biến nhất)
-    // Nếu vẫn lỗi, hãy kiểm tra file auth_provider.dart của nhóm bạn nhé
-    final currentUid = authProvider.user?.uid ?? "";
+    
+    // Sử dụng đúng biến 'user' từ AuthProvider của bạn
+    final currentUid = authProvider.user?.uid ?? ""; 
 
     return DefaultTabController(
       length: 3,
@@ -31,6 +31,7 @@ class MyReportsView extends StatelessWidget {
         ),
         body: Consumer<IncidentProvider>(
           builder: (context, provider, child) {
+            // Lọc ra các sự cố CỦA RIÊNG người dùng đang đăng nhập
             final myIncidents = provider.incidents
                 .where((item) => item.uid == currentUid)
                 .toList();
@@ -49,6 +50,7 @@ class MyReportsView extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context, List<Incident> allMyItems, IncidentStatus status) {
+    // Lọc tiếp theo trạng thái cho từng Tab
     final filteredList = allMyItems.where((item) => item.status == status).toList();
 
     if (filteredList.isEmpty) {
@@ -57,7 +59,7 @@ class MyReportsView extends StatelessWidget {
 
     return ListView.builder(
       padding: const EdgeInsets.all(8),
-      itemCount: filteredList.length, // FIX LỖI 2: .size -> .length
+      itemCount: filteredList.length, 
       itemBuilder: (context, index) {
         final item = filteredList[index];
 
@@ -65,7 +67,8 @@ class MyReportsView extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 8.0),
           child: DismissibleItem(
             incident: item,
-            onTap: () => Navigator.pushNamed(context, '/detail', arguments: item.id),
+            // SỬA LỖI ĐIỀU HƯỚNG: Phải truyền 'item' thay vì 'item.id'
+            onTap: () => Navigator.pushNamed(context, '/detail', arguments: item),
             confirmDismiss: (direction) async => await _showDeleteDialog(context, item.id!),
           ),
         );
@@ -73,7 +76,6 @@ class MyReportsView extends StatelessWidget {
     );
   }
 
-  // Giữ nguyên hàm _showDeleteDialog bên dưới...
   Future<bool?> _showDeleteDialog(BuildContext context, String id) async {
     return await showDialog<bool>(
       context: context,

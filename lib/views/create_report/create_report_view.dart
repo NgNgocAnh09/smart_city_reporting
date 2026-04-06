@@ -9,6 +9,7 @@ import '../../models/incident_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/incident_provider.dart';
 import '../../services/cloudinary_service.dart';
+
 import 'widgets/image_painter_widget.dart';
 
 class CreateReportView extends StatefulWidget {
@@ -22,12 +23,12 @@ class _CreateReportViewState extends State<CreateReportView> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final _addressController = TextEditingController(); // NEW
   final ImagePicker _imagePicker = ImagePicker();
 
   XFile? _selectedImage;
   Uint8List? _selectedImageBytes;
   Position? _position;
-  String _weather = 'Chua co du lieu';
   bool _isLoadingLocation = false;
   bool _isSubmitting = false;
 
@@ -41,6 +42,7 @@ class _CreateReportViewState extends State<CreateReportView> {
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
+    _addressController.dispose();
     super.dispose();
   }
 
@@ -114,7 +116,6 @@ class _CreateReportViewState extends State<CreateReportView> {
 
       setState(() {
         _position = pos;
-        _weather = 'Dang cap nhat';
       });
     } catch (_) {
       if (mounted) {
@@ -173,15 +174,17 @@ class _CreateReportViewState extends State<CreateReportView> {
       final incident = Incident(
         title: _titleController.text.trim(),
         description: _descriptionController.text.trim(),
+        address: _addressController.text.trim(),
         imageUrl: imageUrl,
         lat: _position!.latitude,
         lng: _position!.longitude,
         status: IncidentStatus.pending,
-        weather: _weather,
+        
         uid: uid,
         createdAt: DateTime.now(),
       );
 
+     if (!mounted) return;
       await context.read<IncidentProvider>().addIncident(incident);
 
       if (!mounted) {
@@ -252,6 +255,21 @@ class _CreateReportViewState extends State<CreateReportView> {
                   return null;
                 },
               ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _addressController,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(
+                  labelText: 'Dia chi',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Vui long nhap dia chi su co.';
+                  }
+                  return null;
+                },
+              ),
               const SizedBox(height: 16),
               ImagePainterWidget(
                 imageBytes: _selectedImageBytes,
@@ -284,13 +302,7 @@ class _CreateReportViewState extends State<CreateReportView> {
                 ),
               ),
               const SizedBox(height: 12),
-              Card(
-                child: ListTile(
-                  leading: const Icon(Icons.cloud),
-                  title: const Text('Thoi tiet'),
-                  subtitle: Text(_weather),
-                ),
-              ),
+              
               const SizedBox(height: 20),
               SizedBox(
                 height: 48,
