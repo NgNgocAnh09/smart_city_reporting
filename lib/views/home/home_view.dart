@@ -36,6 +36,8 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final photoUrl = context.watch<AuthProvider>().user?.photoURL;
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 76,
@@ -57,20 +59,14 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
-            child: Consumer<AuthProvider>(
-              builder: (context, authProvider, _) {
-                final photoUrl = authProvider.user?.photoURL;
-
-                return CircleAvatar(
-                  radius: 18,
-                  backgroundImage: photoUrl != null && photoUrl.isNotEmpty
-                      ? NetworkImage(photoUrl)
-                      : null,
-                  child: photoUrl == null || photoUrl.isEmpty
-                      ? const Icon(Icons.person)
-                      : null,
-                );
-              },
+            child: CircleAvatar(
+              radius: 18,
+              backgroundImage: photoUrl != null && photoUrl.isNotEmpty
+                  ? NetworkImage(photoUrl)
+                  : null,
+              child: photoUrl == null || photoUrl.isEmpty
+                  ? const Icon(Icons.person)
+                  : null,
             ),
           ),
         ],
@@ -98,23 +94,14 @@ class _HomeViewState extends State<HomeView> {
             itemBuilder: (context, index) {
               final incident = filteredIncidents[index];
 
-              return IncidentCard(
-                incident: incident,
-                onTap: () {
-                  final incidentId = incident.id;
-                  if (incidentId == null || incidentId.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Khong tim thay id su co.')),
-                    );
-                    return;
-                  }
-
-                  Navigator.pushNamed(context, '/detail', arguments: incidentId);
-                },
-              );
+              return IncidentCard(incident: incident, onTap: () {});
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, '/create'),
+        child: const Icon(Icons.add),
       ),
     );
   }
