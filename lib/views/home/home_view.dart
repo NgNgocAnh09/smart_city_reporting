@@ -36,6 +36,8 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final photoUrl = context.watch<AuthProvider>().user?.photoURL;
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 76,
@@ -57,20 +59,14 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
-            child: Consumer<AuthProvider>(
-              builder: (context, authProvider, _) {
-                final photoUrl = authProvider.user?.photoURL;
-
-                return CircleAvatar(
-                  radius: 18,
-                  backgroundImage: photoUrl != null && photoUrl.isNotEmpty
-                      ? NetworkImage(photoUrl)
-                      : null,
-                  child: photoUrl == null || photoUrl.isEmpty
-                      ? const Icon(Icons.person)
-                      : null,
-                );
-              },
+            child: CircleAvatar(
+              radius: 18,
+              backgroundImage: photoUrl != null && photoUrl.isNotEmpty
+                  ? NetworkImage(photoUrl)
+                  : null,
+              child: photoUrl == null || photoUrl.isEmpty
+                  ? const Icon(Icons.person)
+                  : null,
             ),
           ),
         ],
@@ -94,19 +90,27 @@ class _HomeViewState extends State<HomeView> {
           return ListView.separated(
             padding: const EdgeInsets.all(16),
             itemCount: filteredIncidents.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
+            separatorBuilder: (context, index) => const SizedBox(height: 12),
             itemBuilder: (context, index) {
               final incident = filteredIncidents[index];
 
               return IncidentCard(
                 incident: incident,
                 onTap: () {
-                  Navigator.pushNamed(context, '/detail', arguments: incident);
+                  Navigator.pushNamed(
+                    context,
+                    '/detail',
+                    arguments: incident.id,
+                  );
                 },
               );
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, '/create'),
+        child: const Icon(Icons.add),
       ),
     );
   }
