@@ -63,6 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '316749649272',
     projectId: 'smart-city-3f2b2',
     storageBucket: 'smart-city-3f2b2.firebasestorage.app',
+    androidClientId: '316749649272-61d4faej47ca5eei2gsbjhmvk70vqg44.apps.googleusercontent.com',
+    iosClientId: '316749649272-nlet4rouqni5o6ic0je9j0tal5nh1bp6.apps.googleusercontent.com',
     iosBundleId: 'com.example.smartCityReporting',
   );
 
@@ -72,6 +74,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '316749649272',
     projectId: 'smart-city-3f2b2',
     storageBucket: 'smart-city-3f2b2.firebasestorage.app',
+    androidClientId: '316749649272-61d4faej47ca5eei2gsbjhmvk70vqg44.apps.googleusercontent.com',
+    iosClientId: '316749649272-nlet4rouqni5o6ic0je9j0tal5nh1bp6.apps.googleusercontent.com',
     iosBundleId: 'com.example.smartCityReporting',
   );
 
@@ -83,4 +87,5 @@ class DefaultFirebaseOptions {
     authDomain: 'smart-city-3f2b2.firebaseapp.com',
     storageBucket: 'smart-city-3f2b2.firebasestorage.app',
   );
+
 }
