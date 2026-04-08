@@ -20,7 +20,7 @@ class DismissibleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: Key(incident.id ?? incident.createdAt.toString()),
-      direction: DismissDirection.endToStart, // Vuốt từ phải sang trái để xóa
+      direction: DismissDirection.endToStart, 
       confirmDismiss: confirmDismiss,
       background: Container(
         alignment: Alignment.centerRight,
@@ -39,7 +39,6 @@ class DismissibleItem extends StatelessWidget {
               onTap: onTap,
             ),
           ),
-          // Actions
           PopupMenuButton<String>(
             onSelected: (value) async {
               final provider = Provider.of<IncidentProvider>(context, listen: false);
@@ -47,10 +46,8 @@ class DismissibleItem extends StatelessWidget {
               if (value == 'edit') {
                 await _showEditDialog(context, provider, incident);
               } else if (value == 'in_progress') {
-                // SỬA LỖI 1: Dùng .name thay vì .index để tránh crash app khi tải lại dữ liệu
                 await provider.updateIncident(incident.id!, {'status': IncidentStatus.inProgress.name});
               } else if (value == 'resolved') {
-                // SỬA LỖI 1: Dùng .name thay vì .index
                 await provider.updateIncident(incident.id!, {'status': IncidentStatus.resolved.name});
               }
             },
@@ -72,7 +69,6 @@ class DismissibleItem extends StatelessWidget {
 
     await showDialog<void>(
       context: context,
-      // Đổi tên biến này thành dialogContext để không bị nhầm lẫn với context của Widget bên ngoài
       builder: (dialogContext) => AlertDialog(
         title: const Text('Sửa báo cáo'),
         content: SingleChildScrollView(
@@ -97,8 +93,7 @@ class DismissibleItem extends StatelessWidget {
                 'address': addrCtrl.text.trim(),
               });
 
-              // SỬA LỖI 2 (Thiếu mounted): 
-              // Vì đây là StatelessWidget, ta dùng thuộc tính mounted trực tiếp trên dialogContext
+              
               if (!dialogContext.mounted) return;
               
               Navigator.pop(dialogContext);

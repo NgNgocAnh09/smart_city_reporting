@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart'; // Thư viện tọa độ mới dùng cho OSM
+import 'package:latlong2/latlong.dart'; 
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/incident_model.dart';
@@ -64,7 +64,6 @@ class DetailView extends StatelessWidget {
                   const Text('Vị trí sự cố', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   const SizedBox(height: 8),
                   
-                  // BẢN ĐỒ OPENSTREETMAP NẰM Ở ĐÂY
                   _MiniMap(incident: incident),
                   
                   const SizedBox(height: 16),
@@ -85,7 +84,6 @@ class DetailView extends StatelessWidget {
     );
   }
 
-  // Mở ứng dụng bản đồ trên điện thoại (Google Maps hoặc Apple Maps) để dẫn đường
   Future<void> _openDirections(double lat, double lng) async {
     final String url = 'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng';
     final Uri uri = Uri.parse(url);
@@ -113,16 +111,13 @@ class _HeroImage extends StatelessWidget {
   }
 }
 
-// =====================================================================
-// COMPONENT BẢN ĐỒ SỬ DỤNG OPENSTREETMAP
-// =====================================================================
+
 class _MiniMap extends StatelessWidget {
   const _MiniMap({required this.incident});
   final Incident incident;
 
   @override
   Widget build(BuildContext context) {
-    // Tọa độ điểm ghim
     final point = LatLng(incident.lat, incident.lng);
 
     return ClipRRect(
@@ -131,19 +126,17 @@ class _MiniMap extends StatelessWidget {
         height: 200,
         child: FlutterMap(
           options: MapOptions(
-            initialCenter: point, // Căn giữa bản đồ vào tọa độ sự cố
-            initialZoom: 15.0,    // Độ zoom mặc định
+            initialCenter: point, 
+            initialZoom: 15.0,    
             interactionOptions: const InteractionOptions(
-              flags: InteractiveFlag.none, // Khóa tương tác (chỉ để xem tĩnh giống liteMode)
+              flags: InteractiveFlag.none, 
             ),
           ),
           children: [
-            // Lớp nền bản đồ tải từ server của OpenStreetMap miễn phí
             TileLayer(
               urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
               userAgentPackageName: 'com.example.smart_city_reporting',
             ),
-            // Lớp ghim (Marker)
             MarkerLayer(
               markers: [
                 Marker(

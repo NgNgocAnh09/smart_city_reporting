@@ -26,7 +26,6 @@ class _HomeViewState extends State<HomeView> {
 
   List<Incident> _filterIncidents(List<Incident> incidents) {
     if (_searchQuery.trim().isEmpty) {
-      // still apply status filter even when search is empty
       return _statusFilter == null
           ? incidents
           : incidents.where((i) => i.status == _statusFilter).toList();

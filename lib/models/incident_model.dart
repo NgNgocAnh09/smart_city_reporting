@@ -22,10 +22,9 @@ class Incident {
   factory Incident.fromMap(Map<String, dynamic> map, String id) {
     return Incident(
       id: id,
-      // CHÚ Ý: Phải có ?? '' ở tất cả các dòng này
       title: map['title'] ?? 'Không có tiêu đề',
       description: map['description'] ?? '',
-      address: map['address'] ?? 'Chưa có địa chỉ', // Dòng này quan trọng nhất
+      address: map['address'] ?? 'Chưa có địa chỉ', 
       imageUrl: map['imageUrl'] ?? '',
       uid: map['uid'] ?? '',
       

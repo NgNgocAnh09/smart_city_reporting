@@ -14,7 +14,6 @@ class AuthProvider extends ChangeNotifier {
         serverClientId: '316749649272-1u94uobo0mrgs11e9huvh8cq613vb4eb.apps.googleusercontent.com',
       );
 
-      // Đã bỏ dấu '?' và code kiểm tra null vì hàm này luôn trả về đối tượng
       final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
       
       final GoogleSignInAuthentication googleAuth = googleUser.authentication;
@@ -29,7 +28,6 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners(); 
       
     } catch (e) {
-      // Đã thay print() bằng debugPrint() chuẩn của Flutter
       debugPrint("Lỗi đăng nhập Google: $e");
       rethrow;
     }

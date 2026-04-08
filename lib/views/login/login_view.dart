@@ -10,20 +10,17 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  bool _isLoading = false; // Biến kiểm soát trạng thái chờ
+  bool _isLoading = false; 
 
   Future<void> _handleGoogleSignIn() async {
-    setState(() => _isLoading = true); // Bật vòng xoay loading
+    setState(() => _isLoading = true); 
     try {
-      // Gọi hàm đăng nhập từ AuthProvider
       await context.read<AuthProvider>().signInWithGoogle();
       
-      // Đăng nhập thành công -> Chuyển sang màn hình Home
       if (mounted) {
         Navigator.pushReplacementNamed(context, '/home');
       }
     } catch (e) {
-      // Đăng nhập thất bại -> Báo lỗi
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Đăng nhập thất bại. Vui lòng thử lại!')),
@@ -31,7 +28,7 @@ class _LoginViewState extends State<LoginView> {
       }
     } finally {
       if (mounted) {
-        setState(() => _isLoading = false); // Tắt vòng xoay loading
+        setState(() => _isLoading = false); 
       }
     }
   }
@@ -45,7 +42,6 @@ class _LoginViewState extends State<LoginView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Có thể thay Icon này bằng Logo thật của dự án
               const Icon(Icons.location_city, size: 100, color: Colors.blue),
               const SizedBox(height: 24),
               const Text(
@@ -60,9 +56,8 @@ class _LoginViewState extends State<LoginView> {
               ),
               const SizedBox(height: 48),
               
-              // Nút Đăng nhập
               _isLoading
-                  ? const CircularProgressIndicator() // Đang tải thì hiện vòng xoay
+                  ? const CircularProgressIndicator()
                   : ElevatedButton.icon(
                       onPressed: _handleGoogleSignIn,
                       style: ElevatedButton.styleFrom(
