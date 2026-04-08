@@ -111,9 +111,9 @@ class _StatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (label, color) = switch (status) {
-      IncidentStatus.pending => ('Pending', Colors.orange),
-      IncidentStatus.inProgress => ('In Progress', Colors.blue),
-      IncidentStatus.resolved => ('Resolved', Colors.green),
+      IncidentStatus.pending => ('Chờ xử lý', Colors.orange),
+      IncidentStatus.inProgress => ('Đang xử lý', Colors.blue),
+      IncidentStatus.resolved => ('Đã xử lý', Colors.green),
     };
 
     return Container(

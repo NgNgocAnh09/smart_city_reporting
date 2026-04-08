@@ -25,7 +25,7 @@ class MyReportsView extends StatelessWidget {
             tabs: [
               Tab(text: 'Chờ xử lý'),
               Tab(text: 'Đang xử lý'),
-              Tab(text: 'Đã xong'),
+              Tab(text: 'Đã xử lý'),
             ],
           ),
         ),

@@ -193,12 +193,12 @@ class _CreateReportViewState extends State<CreateReportView> {
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Gui bao cao thanh cong.')));
+      ).showSnackBar(const SnackBar(content: Text('Gửi báo cáo thành công.')));
       Navigator.pop(context);
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Gui bao cao that bai. Thu lai sau.')),
+          const SnackBar(content: Text('Gửi báo cáo thất bại. Thử lại sau.')),
         );
       }
     } finally {
@@ -217,7 +217,7 @@ class _CreateReportViewState extends State<CreateReportView> {
         : 'Lat: ${_position!.latitude.toStringAsFixed(6)} - Lng: ${_position!.longitude.toStringAsFixed(6)}';
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Gui bao cao su co')),
+      appBar: AppBar(title: const Text('Gửi báo cáo sự cố')),
       body: SafeArea(
         child: Form(
           key: _formKey,
@@ -228,12 +228,12 @@ class _CreateReportViewState extends State<CreateReportView> {
                 controller: _titleController,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
-                  labelText: 'Tieu de',
+                  labelText: 'Tiêu đề',
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Vui long nhap tieu de.';
+                    return 'Vui lòng nhập tiêu đề.';
                   }
                   return null;
                 },
@@ -244,13 +244,13 @@ class _CreateReportViewState extends State<CreateReportView> {
                 minLines: 4,
                 maxLines: 6,
                 decoration: const InputDecoration(
-                  labelText: 'Mo ta',
+                  labelText: 'Mô tả',
                   alignLabelWithHint: true,
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Vui long nhap mo ta su co.';
+                    return 'Vui lòng nhập mô tả sự cố.';
                   }
                   return null;
                 },
@@ -260,12 +260,12 @@ class _CreateReportViewState extends State<CreateReportView> {
                 controller: _addressController,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
-                  labelText: 'Dia chi',
+                  labelText: 'Địa chỉ',
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Vui long nhap dia chi su co.';
+                    return 'Vui lòng nhập địa chỉ sự cố.';
                   }
                   return null;
                 },
@@ -315,7 +315,7 @@ class _CreateReportViewState extends State<CreateReportView> {
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
                       : const Icon(Icons.send),
-                  label: Text(_isSubmitting ? 'Dang gui...' : 'Xac nhan gui'),
+                  label: Text(_isSubmitting ? 'Đang gửi...' : 'Xác nhận gửi'),
                 ),
               ),
             ],

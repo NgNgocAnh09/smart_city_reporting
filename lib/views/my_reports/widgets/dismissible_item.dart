@@ -55,9 +55,9 @@ class DismissibleItem extends StatelessWidget {
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(value: 'edit', child: Text('Sửa')),
-              const PopupMenuItem(value: 'in_progress', child: Text('Đang xử lý')),
-              const PopupMenuItem(value: 'resolved', child: Text('Đã xong')),
+              const PopupMenuItem(value: 'edit', child: Text('Sửa sự cố')),
+              const PopupMenuItem(value: 'in_progress', child: Text('Đánh dấu Đang xử lý')),
+              const PopupMenuItem(value: 'resolved', child: Text('Đánh dấu Đã xử lý')),
             ],
           ),
         ],

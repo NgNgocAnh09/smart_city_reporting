@@ -70,7 +70,7 @@ class _HomeViewState extends State<HomeView> {
             child: TextButton.icon(
               onPressed: () => Navigator.pushNamed(context, '/my_reports'),
               icon: const Icon(Icons.folder_open, color: Colors.blue),
-              label: const Text('My report', style: TextStyle(color: Colors.blue)),
+              label: const Text('Nhật ký', style: TextStyle(color: Colors.blue)),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.blue,
                 padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -106,25 +106,25 @@ class _HomeViewState extends State<HomeView> {
                   child: Row(
                     children: [
                       ChoiceChip(
-                        label: const Text('All'),
+                        label: const Text('Tất cả'),
                         selected: _statusFilter == null,
                         onSelected: (_) => setState(() => _statusFilter = null),
                       ),
                       const SizedBox(width: 8),
                       ChoiceChip(
-                        label: const Text('Pending'),
+                        label: const Text('Chờ xử lý'),
                         selected: _statusFilter == IncidentStatus.pending,
                         onSelected: (_) => setState(() => _statusFilter = IncidentStatus.pending),
                       ),
                       const SizedBox(width: 8),
                       ChoiceChip(
-                        label: const Text('In progress'),
+                        label: const Text('Đang xử lý'),
                         selected: _statusFilter == IncidentStatus.inProgress,
                         onSelected: (_) => setState(() => _statusFilter = IncidentStatus.inProgress),
                       ),
                       const SizedBox(width: 8),
                       ChoiceChip(
-                        label: const Text('Resolved'),
+                        label: const Text('Đã xử lý'),
                         selected: _statusFilter == IncidentStatus.resolved,
                         onSelected: (_) => setState(() => _statusFilter = IncidentStatus.resolved),
                       ),

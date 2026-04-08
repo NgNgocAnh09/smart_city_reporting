@@ -25,7 +25,7 @@ class ImagePainterWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
-              'Anh su co',
+              'Ảnh sự cố',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 12),
@@ -46,7 +46,7 @@ class ImagePainterWidget extends StatelessWidget {
                   : const Padding(
                       padding: EdgeInsets.all(16),
                       child: Text(
-                        'Chua co anh. Chon Camera hoac Thu vien de tai anh len.',
+                        'Chưa có ảnh. Chọn Camera hoặc Thư viện để tải ảnh lên.',
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -66,7 +66,7 @@ class ImagePainterWidget extends StatelessWidget {
                   child: OutlinedButton.icon(
                     onPressed: onPickFromGallery,
                     icon: const Icon(Icons.photo_library_outlined),
-                    label: const Text('Thu vien'),
+                    label: const Text('Thư viện'),
                   ),
                 ),
               ],
